@@ -1,0 +1,9 @@
+service,resource_name,environment,region,status,utilization_pct,monthly_cost,owner_team,last_used_days,recommendation_type,recommendation_title,recommendation_detail,estimated_monthly_savings,priority
+EC2,api-worker-1,prod,us-east-1,active,14,2350,Platform,5,rightsize,Rightsize the API worker fleet,The instance is underutilized and can be moved to a smaller family without affecting traffic,840,high
+RDS,customer-db,prod,us-east-1,active,79,1820,Data,0,commitment,Buy a reserved instance for the customer database,Stable usage makes this a strong candidate for committed capacity pricing,430,high
+RDS,staging-db,staging,us-east-1,idle,6,640,Data,18,schedule,Schedule staging database shutdown windows,The staging database is idle outside work hours and can be powered down nightly,360,high
+EBS,old-backup-volume,dev,us-west-2,available,0,120,Platform,29,cleanup,Delete unattached storage,This volume is detached and no longer used by any running workload,120,medium
+NAT Gateway,shared-nat-1,prod,us-east-1,active,92,910,Platform,0,network-optimization,Reduce NAT data transfer,Routable traffic can be shifted through VPC endpoints to reduce NAT charges,245,medium
+ElastiCache,session-cache,prod,us-east-1,active,68,790,App,1,rightsize,Reduce cache node size off-peak,There is enough headroom to move to a smaller node class with minimal risk,210,medium
+EKS,qa-node-group,qa,us-west-2,active,16,1400,QA,11,rightsize,Reduce the QA node group footprint,The QA cluster is larger than required for the current test workload,580,high
+OpenSearch,search-prod,prod,us-east-1,active,74,2200,Search,0,commitment,Commit steady search capacity,Traffic is predictable enough to benefit from reserved pricing,510,high
