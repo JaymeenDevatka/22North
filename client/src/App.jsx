@@ -103,7 +103,7 @@ function App() {
   if (state.loading) {
     return (
       <div className="app-shell loading-state">
-        Loading cloud cost intelligence...
+        Loading 22North Cloud Cost Intelligence...
       </div>
     );
   }
@@ -111,7 +111,7 @@ function App() {
   if (state.error) {
     return (
       <div className="app-shell error-state">
-        <h1>Cloud Cost Intelligence</h1>
+        <h1>22North — Cloud Cost Intelligence Platform</h1>
         <p>{state.error}</p>
       </div>
     );
@@ -265,7 +265,7 @@ function App() {
       <header className="hero card surface">
         <div className="hero-copy">
           <div className="eyebrow-row">
-            <span className="eyebrow">22North Challenge Prototype</span>
+            <span className="eyebrow">22North · Challenge 5 · Hackathon 2026</span>
             <span
               className={`mode-pill ${state.mode === "mysql" ? "mode-live" : "mode-sample"}`}
             >
@@ -273,12 +273,11 @@ function App() {
             </span>
           </div>
           <h1>
-            Cloud cost intelligence that tells FinOps teams what to do next.
+            Turning cloud costs into business insights.
           </h1>
           <p>
-            Analyse cloud usage, identify waste, and surface the savings plan in
-            a format product and engineering teams can act on without
-            hand-holding.
+            Upload → Analyze → Visualize → Save. Get actionable savings
+            recommendations without complex live cloud integrations.
           </p>
           <div className="hero-actions">
             <div className="hero-stat">
@@ -681,9 +680,15 @@ function App() {
 
       <footer className="footer-note">
         <p>
-          Built as a 22North challenge prototype. The dataset is intentionally
-          small, the feedback is actionable, and the design leaves room for CSV
-          import, alerting, and team-level workflows later.
+          <strong>22North — Cloud Cost Intelligence Platform</strong> · Challenge
+          5 · Hackathon 2026 ·{" "}
+          <a
+            href="https://github.com/JaymeenDevatka/22North"
+            target="_blank"
+            rel="noreferrer"
+          >
+            github.com/JaymeenDevatka/22North
+          </a>
         </p>
       </footer>
     </div>

@@ -231,58 +231,63 @@ function buildMeta() {
   return {
     customerJourney: [
       {
-        title: "Import spend data",
+        title: "Upload data",
         description:
-          "Load a sample cloud inventory or connect a CSV export from finance or cloud ops.",
+          "Import a CSV billing export, download the starter template, or use bundled sample datasets.",
       },
       {
-        title: "Detect waste",
+        title: "Process & analyze",
         description:
-          "Score each resource by utilization, age, and optimisation opportunity.",
+          "The insight engine runs cost analysis, waste detection, and priority ranking on every resource.",
       },
       {
-        title: "Prioritise savings",
+        title: "Visualize insights",
         description:
-          "Sort by financial impact and implementation effort so teams know what to do next.",
+          "Review the dashboard, service breakdown charts, and KPI cards for spend concentration.",
       },
       {
-        title: "Act and track",
+        title: "Save costs",
         description:
-          "Mark recommendations reviewed, export the plan, and revisit the dashboard weekly.",
+          "Act on ranked recommendations, track savings estimates, and review import history in MySQL.",
       },
     ],
     architecture: [
       {
-        title: "React experience",
+        title: "Upload module (React)",
         description:
-          "A single-page dashboard with clear recommendations and a customer-friendly narrative.",
+          "CSV upload panel with preview, column mapping guide, and template download.",
       },
       {
-        title: "Express API",
+        title: "Dashboard page (React)",
         description:
-          "Serves analytics, metadata, and data slices from a small JSON-friendly contract.",
+          "Real-time spend views, budget coverage, service breakup, and savings KPIs.",
+      },
+      {
+        title: "Recommendations page (React)",
+        description:
+          "Ranked savings suggestions with filter chips, confidence scores, and review tracking.",
+      },
+      {
+        title: "REST API (Express)",
+        description:
+          "Node.js API serving dashboard, metadata, imports, and health endpoints.",
       },
       {
         title: "Insight engine",
         description:
-          "Transforms raw resource rows into service-level spend and actionable savings opportunities.",
+          "Cost analyzer, waste detector, and recommendation engine with deterministic scoring.",
       },
       {
         title: "MySQL store",
         description:
-          "Stores sample resource inventory and supports a real database-backed demo path.",
-      },
-      {
-        title: "Dockerised database",
-        description:
-          "One-command local MySQL bootstrap using the provided schema and seed scripts.",
+          "Accounts, cost data, and import runs with sample-data fallback for reliable demos.",
       },
     ],
     assumptions: [
-      "Sample data is representative of a mid-sized SaaS cloud footprint.",
-      "Cloud billing and telemetry are pre-exported; no live AWS API integration is required.",
-      "The first release prioritises visibility, prioritisation, and quick wins over deep automation.",
-      "Savings estimates are directional and should be validated with the platform team before execution.",
+      "Growing SaaS companies waste 30–35% of cloud spend without proper visibility.",
+      "Cloud billing and telemetry are pre-exported as CSV — no live AWS integration required.",
+      "Actionable insights matter more than complex ML scoring for the first release.",
+      "Savings estimates are directional and should be validated before execution.",
     ],
     apiCatalog: [
       {

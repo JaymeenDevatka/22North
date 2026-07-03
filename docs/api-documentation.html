@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REST API Reference — 22North</title>
+  <!-- Plus Jakarta Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-light: #1e293b;
+      --accent: #0284c7;
+      --text: #334155;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --bg-soft: #f8fafc;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      
+      --get-badge: #10b981;
+      --get-bg: #ecfdf5;
+      --post-badge: #f59e0b;
+      --post-bg: #fffbeb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background: #f1f5f9;
+      padding: 40px 20px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      background: #ffffff;
+      padding: 60px 80px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+      .page {
+        margin: 0;
+        padding: 40px;
+        box-shadow: none;
+        border-radius: 0;
+        width: 100%;
+        max-width: 100%;
+        page-break-after: always;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+
+    .header-block {
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 30px;
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 36px 0 16px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+
+    .api-endpoint {
+      margin: 30px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .api-header {
+      background: var(--bg-soft);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .method-badge {
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .method-badge.get {
+      background-color: var(--get-bg);
+      color: var(--get-badge);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .method-badge.post {
+      background-color: var(--post-bg);
+      color: var(--post-badge);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .api-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 1.05rem;
+    }
+
+    .api-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .api-body {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 10px 0 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background-color: var(--bg-soft);
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .param-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .param-type {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    .param-req {
+      color: #ef4444;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .param-opt {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .print-banner {
+      background: var(--primary-light);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .print-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+
+    .print-btn:hover {
+      background: #0369a1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-banner no-print">
+    <span>📄 <strong>Print-Ready REST API Documentation</strong>. Save or Print directly to PDF.</span>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <!-- Page 1: API Overview -->
+  <div class="page">
+    <div class="header-block">
+      <span class="eyebrow">Technical Integration Contract</span>
+      <h1>REST API Documentation</h1>
+      <p style="font-size: 1.2rem; color: var(--text-muted); margin-top: 10px; font-weight: 500;">
+        Back-End Endpoints, Data Schemas &amp; Cost Intelligence Ingestion Contracts
+      </p>
+    </div>
+
+    <h2>1. REST API Architecture Overview</h2>
+    <p>
+      The 22North back-end is constructed using a Node.js and Express.js REST API server. It exposes endpoints designed to service the React-based frontend dashboard, process CSV binary uploads, perform rule-based utilization metrics analyses in real time, and audit cost reduction histories.
+    </p>
+    <p>
+      <strong>Base URL:</strong> <code>http://localhost:4000</code> (in local development)
+    </p>
+    <p>
+      <strong>Data Format:</strong> All API requests and responses utilize standard application/json payloads, with the exception of CSV uploads which can be supplied as a raw multi-part file body or a structured JSON array.
+    </p>
+
+    <h2>2. API Endpoints Catalog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>HTTP Method</th>
+          <th>Endpoint Path</th>
+          <th>Summary / Action</th>
+          <th>Data Persistence Mode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="method-badge get">GET</span></td>
+          <td><code>/api/health</code></td>
+          <td>Checks server status &amp; database connectivity.</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td><span class="method-badge get">GET</span></td>
+          <td><code>/api/dashboard</code></td>
+          <td>Calculates optimization cards &amp; breakdown charts.</td>
+          <td>Active (MySQL or Seed Fallback)</td>
+        </tr>
+        <tr>
+          <td><span class="method-badge get">GET</span></td>
+          <td><code>/api/resources</code></td>
+          <td>Fetches raw resource data rows.</td>
+          <td>Read-only</td>
+        </tr>
+        <tr>
+          <td><span class="method-badge get">GET</span></td>
+          <td><code>/api/meta</code></td>
+          <td>Retrieves static customer journeys &amp; schemas.</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td><span class="method-badge get">GET</span></td>
+          <td><code>/api/imports</code></td>
+          <td>Retrieves logs of previous file imports.</td>
+          <td>Read-only</td>
+        </tr>
+        <tr>
+          <td><span class="method-badge post">POST</span></td>
+          <td><code>/api/import</code></td>
+          <td>Parses a new billing dataset and returns immediate analytics.</td>
+          <td>Creates Import Run log</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="api-endpoint">
+      <div class="api-header">
+        <span class="method-badge get">GET</span>
+        <span class="api-path">/api/health</span>
+      </div>
+      <div class="api-body">
+        <p>Checks back-end health status and reveals if the persistence layer is actively querying MySQL or falling back to local memory datasets.</p>
+        <div class="section-title">Example JSON Response:</div>
+        <pre>{
+  "ok": true,
+  "mode": "sample",
+  "timestamp": "2026-07-03T03:54:43.000Z"
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 2: Dashboard and Resource Endpoints -->
+  <div class="page page-break">
+    <div class="api-endpoint">
+      <div class="api-header">
+        <span class="method-badge get">GET</span>
+        <span class="api-path">/api/dashboard</span>
+      </div>
+      <div class="api-body">
+        <p>Calculates and retrieves cost metrics, service break-downs, and ranked optimization actions. Used to populate the main UI dashboard.</p>
+        <div class="section-title">Example JSON Response:</div>
+        <pre>{
+  "mode": "mysql",
+  "summary": {
+    "accountName": "Northstar SaaS",
+    "monthlyBudget": 15000,
+    "monthlySpend": 11798,
+    "projectedSavings": 4138,
+    "netAfterOptimization": 7660,
+    "coveragePct": 79,
+    "savingsPct": 35,
+    "resourceCount": 10,
+    "highPriorityCount": 6,
+    "topService": "EC2"
+  },
+  "serviceBreakdown": [
+    { "service": "EC2", "spend": 3660, "savings": 1490, "count": 2, "savingsRate": 41 }
+  ],
+  "recommendations": [
+    {
+      "id": 1,
+      "service": "EC2",
+      "resourceName": "api-worker-3",
+      "monthlyCost": 2480,
+      "estimatedMonthlySavings": 930,
+      "priority": "high",
+      "confidence": 91,
+      "effort": "Low",
+      "action": "Resize the instance family and validate with a 48-hour watch window."
+    }
+  ]
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 3: Ingestion and Imports -->
+  <div class="page page-break">
+    <div class="api-endpoint">
+      <div class="api-header">
+        <span class="method-badge post">POST</span>
+        <span class="api-path">/api/import</span>
+      </div>
+      <div class="api-body">
+        <p>Receives parsed rows from a billing file upload, feeds them to the cost heuristics processor, creates a persistent audit trail in <code>import_runs</code>, and returns a tailored dashboard dataset.</p>
+        
+        <div class="section-title">RequestBody JSON Schema:</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Field Path</th>
+              <th>Data Type</th>
+              <th>Necessity</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="param-name">fileName</td>
+              <td class="param-type">string</td>
+              <td><span class="param-req">Required</span></td>
+              <td>Name of the uploaded CSV (e.g. <code>usage.csv</code>).</td>
+            </tr>
+            <tr>
+              <td class="param-name">account.monthlyBudget</td>
+              <td class="param-type">number</td>
+              <td><span class="param-opt">Optional</span></td>
+              <td>Custom target budget threshold. Defaults to <code>15000</code>.</td>
+            </tr>
+            <tr>
+              <td class="param-name">resources</td>
+              <td class="param-type">array</td>
+              <td><span class="param-req">Required</span></td>
+              <td>Array of raw resources extracted from the file.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="section-title">RequestBody JSON Example:</div>
+        <pre>{
+  "fileName": "june-billing.csv",
+  "account": {
+    "monthlyBudget": 20000
+  },
+  "resources": [
+    {
+      "service": "EC2",
+      "resourceName": "staging-processor",
+      "environment": "staging",
+      "monthlyCost": 1200,
+      "utilizationPct": 8,
+      "recommendationType": "rightsize"
+    }
+  ]
+}</pre>
+
+        <div class="section-title">Response JSON Example:</div>
+        <pre>{
+  "mode": "imported",
+  "fileName": "june-billing.csv",
+  "dashboard": { ... },
+  "importRun": {
+    "id": 14,
+    "fileName": "june-billing.csv",
+    "accountName": "june-billing",
+    "resourceCount": 1,
+    "totalSpend": 1200,
+    "projectedSavings": 450,
+    "createdAt": "2026-07-03T03:58:00.000Z"
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

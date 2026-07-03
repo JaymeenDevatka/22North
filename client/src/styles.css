@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  font-family: "Aptos", "Bahnschrift", "Segoe UI", sans-serif;
+  font-family: "Plus Jakarta Sans", "Aptos", "Bahnschrift", "Segoe UI", sans-serif;
   background: #07111f;
   color: #e8eef9;
   --bg: #07111f;
@@ -784,6 +784,15 @@ select {
 .footer-note {
   padding: 18px 4px 8px;
   color: var(--muted);
+}
+
+.footer-note a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer-note a:hover {
+  text-decoration: underline;
 }
 
 .loading-state,

@@ -126,7 +126,7 @@ app.post("/api/import", async (request, response) => {
 });
 
 app.listen(port, () => {
-  console.log(
-    `Cloud Cost Intelligence API listening on http://localhost:${port}`,
+    console.log(
+    `22North Cloud Cost Intelligence API listening on http://localhost:${port}`,
   );
 });

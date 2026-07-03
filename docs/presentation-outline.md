@@ -1,61 +1,55 @@
-# Presentation Outline
+# Presentation Outline — 22North Cloud Cost Intelligence Platform
 
-## Slide 1: Title
+## Slide 1: Title Slide
+- 22North — Cloud Cost Intelligence Platform
+- Challenge 5 - Hackathon 2026
+- Team name and college
 
-- Cloud Cost Intelligence
-- Turning cloud usage into a practical savings plan for a growing SaaS company
+## Slide 2: The Problem
+- 30–35% cloud spend wasted
+- No utilization visibility
+- Hard to find optimization areas
+- Manual tracking is slow
+- Key question: actionable insights without live integrations
 
-## Slide 2: Problem Statement
+## Slide 3: Our Solution — 22North
+- Upload → Analyze → Visualize → Save
+- CSV upload, intelligent analysis, dashboards, recommendations
+- Zero live cloud integration required
 
-- Cloud spend is growing faster than operational visibility.
-- Teams need quick answers: where is money going, what is wasteful, and what should be done first?
+## Slide 4: Key Features
+- Cost dashboard (real-time views, service breakup, budget coverage)
+- Waste detection (low utilization, idle resources)
+- Smart recommendations (rightsizing, reserved instances, cleanup)
+- Savings projections (monthly, annual, ROI indicators)
 
-## Slide 3: Product Goal
+## Slide 5: Customer Journey
+- Step 1: Upload data (CSV, sample datasets, template)
+- Step 2: Process & analyze (cost analysis, priority ranking, waste detection)
+- Step 3: Visualize insights (dashboard, service breakdown, KPIs)
+- Step 4: Save costs (recommendations, savings estimates, import history)
 
-- Analyse usage.
-- Prioritise savings.
-- Make the next action obvious to the customer.
+## Slide 6: Architecture Overview
+- Frontend: React (Upload, Dashboard, Recommendations)
+- API Layer: Node.js + Express REST endpoints
+- Business Logic: Insight Engine (Cost Analyzer, Waste Detector, Recommendation Engine)
+- Database: MySQL (Accounts, Cost Data, Import Runs)
 
-## Slide 4: Customer Journey
+## Slide 7: Technology Stack
+- Frontend: React.js, Vite, CSS
+- Backend: Node.js, Express, JavaScript Insight Engine
+- Database: MySQL 8
+- DevOps: Docker Compose, GitHub
 
-- Upload a billing export or use sample data.
-- Review the preview and header mapping help.
-- Analyse the file and triage the highest-value recommendations.
+## Slide 8: Demo Screenshots
+- Upload page, dashboard, service breakdown, recommendations
+- Live demo at localhost:5173
 
-## Slide 5: Live Demo Walkthrough
+## Slide 9: Business Value
+- $100K/month spend scenario
+- $30K waste, $18K savings, $216K annual
+- 60% waste reduction, 80% faster analysis, 95% recommendation accuracy
 
-- Show monthly spend and projected savings.
-- Walk through the top recommendations.
-- Filter by optimisation type.
-
-## Slide 6: CSV Import and History
-
-- Demonstrate upload, template download, and preview.
-- Show how import history is stored in MySQL and visible in the UI.
-
-## Slide 7: Architecture
-
-- React dashboard
-- Express API
-- Insight engine
-- MySQL persistence for import runs and seed data
-
-## Slide 8: API Design
-
-- `GET /api/dashboard`
-- `GET /api/meta`
-- `GET /api/imports`
-- `POST /api/import`
-
-## Slide 9: Assumptions and Trade-offs
-
-- Sample datasets are sufficient for the challenge.
-- The first release prioritises clarity over automation.
-- Savings estimates are directional, not authoritative.
-
-## Slide 10: Future Enhancements
-
-- CSV column auto-mapping
-- Scheduled imports and alerts
-- Approval workflow for production actions
-- Multi-account and team-level reporting
+## Slide 10: Thank You
+- GitHub link, team contact
+- Tagline: "Turning Cloud Costs into Business Insights"

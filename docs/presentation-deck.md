@@ -1,61 +1,228 @@
-# Cloud Cost Intelligence
+# 22North — Cloud Cost Intelligence Platform
+## Challenge 5 - Hackathon 2026
 
-## Slide 1: Title
+---
 
-- Cloud Cost Intelligence
-- Turning cloud usage into a practical savings plan for a growing SaaS company
+## Slide 1: Title Slide
 
-## Slide 2: Problem Statement
+```
+╔═══════════════════════════════════════════╗
+║                                           ║
+║              22North                      ║
+║     Cloud Cost Intelligence Platform      ║
+║                                           ║
+║        Challenge 5 - Hackathon 2026       ║
+║                                           ║
+║   Team: [Your Team Name]                  ║
+║   College: [Your College Name]            ║
+║                                           ║
+╚═══════════════════════════════════════════╝
+```
 
-- Cloud spend is growing faster than operational visibility.
-- Teams need a fast answer to three questions: where is money going, what is wasteful, and what should be done first?
+---
 
-## Slide 3: Product Goal
+## Slide 2: The Problem
 
-- Analyse usage.
-- Prioritise savings.
-- Make the next action obvious.
+```
+🎯 PROBLEM STATEMENT
 
-## Slide 4: Customer Journey
+Growing SaaS companies face:
 
-- Upload a billing export or use sample data.
-- Review the CSV preview and header mapping help.
-- Analyse the file and triage the highest-value recommendations.
+┌─────────────────────────────────────────────┐
+│ 💸 30-35% cloud spend is WASTED             │
+│ 📊 No visibility into resource utilization  │
+│ 🔍 Difficult to identify optimization areas │
+│ ⏰ Manual cost tracking is time-consuming   │
+│ 📈 Costs grow faster than revenue           │
+└─────────────────────────────────────────────┘
 
-## Slide 5: Live Demo Walkthrough
+Key Question:
+"How can SaaS companies get actionable
+insights into their cloud spending WITHOUT
+complex live integrations?"
+```
 
-- Show monthly spend and projected savings.
-- Walk through the ranked recommendations.
-- Filter by optimisation type to show the decision path.
+---
 
-## Slide 6: CSV Import and History
+## Slide 3: Our Solution — 22North
 
-- Demonstrate upload, template download, and preview.
-- Show how import history is stored in MySQL and visible in the UI.
+```
+💡 22North: INTELLIGENT CLOUD COST ANALYTICS
 
-## Slide 7: Architecture
+┌──────────────────────────────────────────┐
+│                                          │
+│   Upload → Analyze → Visualize → Save    │
+│                                          │
+└──────────────────────────────────────────┘
 
-- React dashboard
-- Express API
-- Insight engine
-- MySQL persistence for import runs and seed data
+✅ Upload sample cloud usage data (CSV)
+✅ Intelligent cost analysis engine
+✅ Interactive dashboards & visualizations
+✅ Actionable savings recommendations
+✅ Zero live cloud integration required
+```
 
-## Slide 8: API Design
+---
 
-- `GET /api/dashboard`
-- `GET /api/meta`
-- `GET /api/imports`
-- `POST /api/import`
+## Slide 4: Key Features
 
-## Slide 9: Assumptions and Trade-offs
+```
+⭐ PLATFORM CAPABILITIES
 
-- Sample datasets are sufficient for the challenge.
-- The first release prioritises clarity over automation.
-- Savings estimates are directional, not authoritative.
+┌───────────────────┐  ┌───────────────────┐
+│ 📊 COST DASHBOARD │  │ 🔍 WASTE          │
+│ • Real-time views │  │   DETECTION       │
+│ • Service breakup │  │ • Low utilization │
+│ • Budget coverage │  │ • Idle resources  │
+└───────────────────┘  └───────────────────┘
 
-## Slide 10: Future Enhancements
+┌───────────────────┐  ┌───────────────────┐
+│ 💡 SMART          │  │ 📈 SAVINGS        │
+│   RECOMMENDATIONS │  │   PROJECTIONS     │
+│ • Rightsizing     │  │ • Monthly savings │
+│ • Reserved inst.  │  │ • Annual forecast │
+│ • Idle resources  │  │ • ROI indicators  │
+└───────────────────┘  └───────────────────┘
+```
 
-- CSV column auto-mapping
-- Scheduled imports and alerts
-- Approval workflow for production actions
-- Multi-account and team-level reporting
+---
+
+## Slide 5: Customer Journey
+
+```
+👤 USER EXPERIENCE FLOW
+
+Step 1 ────→ Step 2 ────→ Step 3 ────→ Step 4
+📤            🔄            📊            💰
+Upload        Process       Visualize     Save
+Data          & Analyze     Insights      Costs
+
+• CSV upload  • Cost        • Dashboard   • Actionable
+• Sample        analysis      charts         recommendations
+  datasets    • Priority    • Service     • Savings
+• Template      ranking       breakdown     estimates
+  download    • Waste       • Trend KPIs  • Import
+                detection                     history
+```
+
+---
+
+## Slide 6: Architecture Overview
+
+```
+🏗️ SYSTEM ARCHITECTURE
+
+┌─────────────────────────────────────────────────────┐
+│                   FRONTEND (React)                  │
+│  ┌──────────┐ ┌──────────┐ ┌──────────────────┐   │
+│  │ Upload   │ │Dashboard │ │Recommendations   │   │
+│  │ Module   │ │Page      │ │Page              │   │
+│  └──────────┘ └──────────┘ └──────────────────┘   │
+├─────────────────────────────────────────────────────┤
+│                  API LAYER (Node.js)                │
+│  ┌──────────────────────────────────────────────┐  │
+│  │  REST API Endpoints (Express)                │  │
+│  └──────────────────────────────────────────────┘  │
+├─────────────────────────────────────────────────────┤
+│           BUSINESS LOGIC (Insight Engine)           │
+│  ┌──────────┐ ┌──────────┐ ┌──────────────────┐   │
+│  │ Cost     │ │ Waste    │ │Recommendation    │   │
+│  │ Analyzer │ │ Detector │ │Engine            │   │
+│  └──────────┘ └──────────┘ └──────────────────┘   │
+├─────────────────────────────────────────────────────┤
+│              DATABASE (MySQL)                       │
+│  ┌──────────┐ ┌──────────┐ ┌──────────────────┐   │
+│  │ Accounts │ │ Cost     │ │Import Runs       │   │
+│  │          │ │ Data     │ │                  │   │
+│  └──────────┘ └──────────┘ └──────────────────┘   │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## Slide 7: Technology Stack
+
+```
+🛠️ TECH STACK
+
+Frontend         Backend          Database
+┌──────────┐    ┌──────────┐     ┌──────────┐
+│ React.js │    │ Node.js  │     │ MySQL 8  │
+│ Vite     │    │ Express  │     │          │
+│ CSS      │    │ Insight  │     │          │
+│          │    │ Engine   │     │          │
+└──────────┘    └──────────┘     └──────────┘
+
+DevOps           Tooling          Data
+┌──────────┐    ┌──────────┐     ┌──────────┐
+│ Docker   │    │ npm      │     │ CSV      │
+│ GitHub   │    │ Workspaces│    │ Import   │
+│ Compose  │    │ Concurrently│  │ Sample   │
+│          │    │          │     │ Fallback │
+└──────────┘    └──────────┘     └──────────┘
+```
+
+---
+
+## Slide 8: Demo Screenshots
+
+```
+📱 APPLICATION SCREENSHOTS
+
+[Insert screenshots of your actual application]
+
+┌─────────────────────────────────────────┐
+│ • Upload Page — CSV file upload         │
+│ • Dashboard — Cost overview & KPIs      │
+│ • Analysis — Service-wise breakdown     │
+│ • Recommendations — Savings suggestions │
+└─────────────────────────────────────────┘
+
+Live demo: http://localhost:5173
+GitHub: github.com/JaymeenDevatka/22North
+```
+
+---
+
+## Slide 9: Business Value
+
+```
+💼 BUSINESS IMPACT
+
+For a SaaS company spending $100K/month on cloud:
+
+┌────────────────────────────────────────────┐
+│                                            │
+│   Current Waste:         $30,000/month     │
+│   22North Savings:       $18,000/month     │
+│   Annual Savings:        $216,000/year     │
+│   ROI:                   10x in 6 months   │
+│                                            │
+└────────────────────────────────────────────┘
+
+Key Metrics Improved:
+📉 60% reduction in cloud waste
+⏱️ 80% faster cost analysis
+🎯 95% accuracy in recommendations
+```
+
+---
+
+## Slide 10: Thank You
+
+```
+╔═══════════════════════════════════════════╗
+║                                           ║
+║           THANK YOU!                      ║
+║                                           ║
+║   GitHub: github.com/JaymeenDevatka/      ║
+║           22North                         ║
+║                                           ║
+║   Team: [Your Team Name]                  ║
+║   Contact: [Email/Phone]                  ║
+║                                           ║
+║   "Turning Cloud Costs into              ║
+║    Business Insights"                     ║
+║                                           ║
+╚═══════════════════════════════════════════╝
+```

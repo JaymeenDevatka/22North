@@ -1,41 +1,109 @@
-# 5-Minute Speaker Script
+# Speaker Script — 22North Cloud Cost Intelligence Platform
 
-## Slide 1
+## Slide 1: Title Slide
 
-Open with the core message: this product helps a SaaS team understand cloud spend quickly and turn it into an action plan instead of a static report.
+> "Good [morning/afternoon]. We are [Team Name] from [College Name]. We built **22North — Cloud Cost Intelligence Platform** for Challenge 5 of the Hackathon 2026."
 
-## Slide 2
+---
 
-Frame the problem in business terms. Cloud costs are increasing, but the team lacks visibility into which resources are wasteful and which changes will actually save money.
+## Slide 2: The Problem
 
-## Slide 3
+> "Growing SaaS companies waste 30 to 35 percent of their cloud spend. Teams lack visibility into utilization, struggle to find optimization areas, and spend hours on manual cost tracking — while costs grow faster than revenue."
+>
+> "The key question we set out to answer: how can SaaS companies get **actionable insights** without complex live cloud integrations?"
 
-State the product goal clearly: analyse usage, prioritise the biggest savings opportunities, and make the next step obvious for the customer.
+---
 
-## Slide 4
+## Slide 3: Our Solution — 22North
 
-Walk through the customer journey: upload a CSV export, review the preview and header mapping guidance, then analyse the file to surface the highest-value recommendations.
+> "**22North** is an intelligent cloud cost analytics platform. The flow is simple: **Upload → Analyze → Visualize → Save**."
+>
+> "Teams upload CSV billing exports, our analysis engine processes the data, interactive dashboards show spend patterns, and ranked recommendations tell them exactly what to fix first — all without connecting to live AWS APIs."
 
-## Slide 5
+---
 
-Live-demo the main dashboard. Call out monthly spend, projected savings, and the top recommendation first, then show how the filter chips help the user focus on one optimisation type at a time.
+## Slide 4: Key Features
 
-## Slide 6
+> "Four core capabilities drive the platform."
+>
+> "The **Cost Dashboard** gives real-time spend views, service breakup, and budget coverage."
+>
+> "**Waste Detection** flags low-utilization and idle resources."
+>
+> "**Smart Recommendations** cover rightsizing, reserved instances, and cleanup actions."
+>
+> "**Savings Projections** show monthly savings, annual forecasts, and ROI indicators."
 
-Show the CSV import panel, download the template, and explain that import runs are persisted in MySQL when available. This demonstrates that the prototype is not just visual; it keeps a history of uploads.
+---
 
-## Slide 7
+## Slide 5: Customer Journey
 
-Explain the architecture simply: React for the experience, Express for the API, a deterministic insight engine for explainable recommendations, and MySQL for sample data plus import history.
+> "The user journey has four steps."
+>
+> "Step 1: **Upload** a CSV or use our sample dataset."
+>
+> "Step 2: **Process and analyze** — our engine ranks priorities and detects waste."
+>
+> "Step 3: **Visualize** insights on the dashboard with service breakdown charts."
+>
+> "Step 4: **Save costs** with actionable recommendations and persisted import history."
 
-## Slide 8
+---
 
-Highlight the API surface. Keep it short: the dashboard and metadata endpoints support the UI, while the import and history endpoints make the CSV workflow work end to end.
+## Slide 6: Architecture Overview
 
-## Slide 9
+> "The architecture is clean and extensible."
+>
+> "The **React frontend** has upload, dashboard, and recommendations modules."
+>
+> "The **Express API layer** serves REST endpoints."
+>
+> "The **Insight Engine** handles cost analysis, waste detection, and recommendation ranking."
+>
+> "Everything persists in **MySQL**, with a sample-data fallback so demos always work."
 
-Be explicit about assumptions and trade-offs. The solution assumes exported billing data, no live AWS integration, and a focus on clarity over complex automation or machine learning.
+---
 
-## Slide 10
+## Slide 7: Technology Stack
 
-Close with future improvements: smarter column mapping, scheduled imports, alerts, approval workflows, and multi-account reporting. End by tying it back to the business value: faster decisions and cleaner cloud spend.
+> "Our stack is modern and lightweight."
+>
+> "Frontend: React, Vite, and custom CSS."
+>
+> "Backend: Node.js, Express, and a JavaScript insight engine."
+>
+> "Database: MySQL 8."
+>
+> "DevOps: Docker Compose for optional local MySQL, hosted on GitHub."
+
+---
+
+## Slide 8: Demo Screenshots
+
+> "Let me show the live application."
+>
+> [Switch to live demo or show screenshots]
+>
+> "Here is the CSV upload panel, the cost overview dashboard, the service-wise breakdown, and the ranked savings recommendations."
+
+---
+
+## Slide 9: Business Value
+
+> "For a SaaS company spending $100,000 per month on cloud:"
+>
+> "Current waste is roughly $30,000 per month. 22North identifies $18,000 in monthly savings — that's $216,000 per year."
+>
+> "Teams see 60 percent reduction in cloud waste, 80 percent faster cost analysis, and 95 percent accuracy in recommendations."
+
+---
+
+## Slide 10: Thank You
+
+> "Thank you for your time."
+>
+> "Find our code at **github.com/JaymeenDevatka/22North**."
+>
+> "Contact us at [email/phone]."
+>
+> "**22North — Turning Cloud Costs into Business Insights.**"

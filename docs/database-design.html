@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Database Schema Design — 22North</title>
+  <!-- Plus Jakarta Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-light: #1e293b;
+      --accent: #0284c7;
+      --accent-light: #e0f2fe;
+      --text: #334155;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --bg-soft: #f8fafc;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background: #f1f5f9;
+      padding: 40px 20px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      background: #ffffff;
+      padding: 60px 80px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+      .page {
+        margin: 0;
+        padding: 40px;
+        box-shadow: none;
+        border-radius: 0;
+        width: 100%;
+        max-width: 100%;
+        page-break-after: always;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+
+    .header-block {
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 30px;
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 36px 0 16px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px 0;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background-color: var(--bg-soft);
+      color: var(--text-dark);
+      font-weight: 600;
+      border-top: 1px solid var(--border);
+    }
+
+    .col-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .col-type {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+    }
+
+    .col-key {
+      font-weight: 600;
+      color: #b45309;
+    }
+
+    .diagram-container {
+      margin: 30px 0;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      display: flex;
+      justify-content: center;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px 18px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .print-banner {
+      background: var(--primary-light);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .print-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+
+    .print-btn:hover {
+      background: #0369a1;
+    }
+  </style>
+  <!-- Mermaid.js for ER rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      er: { useMaxWidth: true }
+    });
+  </script>
+</head>
+<body>
+
+  <div class="print-banner no-print">
+    <span>📄 <strong>Print-Ready Database Schema Design</strong>. Save or Print directly to PDF.</span>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <!-- Page 1: Schema Overview and ER Diagram -->
+  <div class="page">
+    <div class="header-block">
+      <span class="eyebrow">Relational Relational Persistence Layer</span>
+      <h1>Database Design Specification</h1>
+      <p style="font-size: 1.2rem; color: var(--text-muted); margin-top: 10px; font-weight: 500;">
+        MySQL Schema, Data Types, Relationships &amp; Performance Indexes
+      </p>
+    </div>
+
+    <h2>1. Relational Database Strategy</h2>
+    <p>
+      For the 22North cost platform persistence layer, a relational database model (specifically <strong>MySQL 8</strong>) was selected. Relational schemas offer strong transactional consistency (ACID), strict foreign key constraint enforcement, and indexed lookups—features essential when tracking multiple SaaS cost environments, account budgets, and billing audit lines.
+    </p>
+
+    <h2>2. Entity-Relationship (ER) Diagram</h2>
+    <p>
+      The platform schema includes three core entities: <code>accounts</code> (storing metadata for the active customer organization), <code>resources</code> (containing raw inventory data rows analyzed by the insight engine), and <code>import_runs</code> (storing details of uploaded files).
+    </p>
+
+    <div class="diagram-container">
+      <div class="mermaid">
+        erDiagram
+          ACCOUNTS ||--o{ RESOURCES : "owns"
+          ACCOUNTS {
+            int id PK
+            varchar name
+            varchar industry
+            decimal monthly_budget
+            timestamp created_at
+          }
+          RESOURCES {
+            int id PK
+            int account_id FK
+            varchar service
+            varchar resource_name
+            varchar environment
+            varchar region
+            varchar status
+            decimal utilization_pct
+            decimal monthly_cost
+            varchar owner_team
+            int last_used_days
+            varchar recommendation_type
+            varchar recommendation_title
+            text recommendation_detail
+            decimal estimated_monthly_savings
+            varchar priority
+            timestamp created_at
+          }
+          IMPORT_RUNS {
+            int id PK
+            varchar file_name
+            varchar account_name
+            int resource_count
+            decimal total_spend
+            decimal projected_savings
+            varchar mode
+            timestamp created_at
+          }
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 2: Table Specifications -->
+  <div class="page page-break">
+    <h2>3. Table Definitions</h2>
+
+    <h3>3.1 Table: <code>accounts</code></h3>
+    <p>Stores customer profiles, organizational segments, and budget thresholds.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column Name</th>
+          <th>Data Type</th>
+          <th>Key</th>
+          <th>Nullable</th>
+          <th>Description / Constraints</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">id</td>
+          <td class="col-type">INT</td>
+          <td class="col-key">PK</td>
+          <td>No</td>
+          <td>Primary key with AUTO_INCREMENT.</td>
+        </tr>
+        <tr>
+          <td class="col-name">name</td>
+          <td class="col-type">VARCHAR(120)</td>
+          <td></td>
+          <td>No</td>
+          <td>Organization name (e.g. <code>Northstar SaaS</code>).</td>
+        </tr>
+        <tr>
+          <td class="col-name">industry</td>
+          <td class="col-type">VARCHAR(120)</td>
+          <td></td>
+          <td>No</td>
+          <td>Industry vertical.</td>
+        </tr>
+        <tr>
+          <td class="col-name">monthly_budget</td>
+          <td class="col-type">DECIMAL(12,2)</td>
+          <td></td>
+          <td>No</td>
+          <td>Target spend limit for budget alerting.</td>
+        </tr>
+        <tr>
+          <td class="col-name">created_at</td>
+          <td class="col-type">TIMESTAMP</td>
+          <td></td>
+          <td>No</td>
+          <td>Record insertion date (defaults to current time).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3.2 Table: <code>resources</code></h3>
+    <p>Maintains catalog details and metrics for individual cloud assets.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column Name</th>
+          <th>Data Type</th>
+          <th>Key</th>
+          <th>Nullable</th>
+          <th>Description / Constraints</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">id</td>
+          <td class="col-type">INT</td>
+          <td class="col-key">PK</td>
+          <td>No</td>
+          <td>Primary key with AUTO_INCREMENT.</td>
+        </tr>
+        <tr>
+          <td class="col-name">account_id</td>
+          <td class="col-type">INT</td>
+          <td class="col-key">FK</td>
+          <td>No</td>
+          <td>Foreign Key linked to <code>accounts(id)</code> with CASCADE DELETE.</td>
+        </tr>
+        <tr>
+          <td class="col-name">service</td>
+          <td class="col-type">VARCHAR(120)</td>
+          <td></td>
+          <td>No</td>
+          <td>AWS service type (e.g., <code>EC2</code>, <code>RDS</code>, <code>S3</code>).</td>
+        </tr>
+        <tr>
+          <td class="col-name">resource_name</td>
+          <td class="col-type">VARCHAR(160)</td>
+          <td></td>
+          <td>No</td>
+          <td>Unique name identifier for the resource.</td>
+        </tr>
+        <tr>
+          <td class="col-name">environment</td>
+          <td class="col-type">VARCHAR(40)</td>
+          <td></td>
+          <td>No</td>
+          <td>Operational environment: <code>prod</code>, <code>staging</code>, <code>dev</code>, <code>qa</code>.</td>
+        </tr>
+        <tr>
+          <td class="col-name">utilization_pct</td>
+          <td class="col-type">DECIMAL(5,2)</td>
+          <td></td>
+          <td>No</td>
+          <td>Mean resource utilization percentage (0.00% to 100.00%).</td>
+        </tr>
+        <tr>
+          <td class="col-name">monthly_cost</td>
+          <td class="col-type">DECIMAL(12,2)</td>
+          <td></td>
+          <td>No</td>
+          <td>Current active spend calculated monthly.</td>
+        </tr>
+        <tr>
+          <td class="col-name">estimated_monthly_savings</td>
+          <td class="col-type">DECIMAL(12,2)</td>
+          <td></td>
+          <td>No</td>
+          <td>Calculated cost recovery potential.</td>
+        </tr>
+        <tr>
+          <td class="col-name">priority</td>
+          <td class="col-type">VARCHAR(20)</td>
+          <td></td>
+          <td>No</td>
+          <td>Insight priority level: <code>high</code>, <code>medium</code>, <code>low</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Page 3: Indexes, Optimization, and Seed DDL -->
+  <div class="page page-break">
+    <h3>3.3 Table: <code>import_runs</code></h3>
+    <p>Stores the file audit logs representing historical user CSV uploads.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column Name</th>
+          <th>Data Type</th>
+          <th>Key</th>
+          <th>Nullable</th>
+          <th>Description / Constraints</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-name">id</td>
+          <td class="col-type">INT</td>
+          <td class="col-key">PK</td>
+          <td>No</td>
+          <td>Primary key with AUTO_INCREMENT.</td>
+        </tr>
+        <tr>
+          <td class="col-name">file_name</td>
+          <td class="col-type">VARCHAR(200)</td>
+          <td></td>
+          <td>No</td>
+          <td>Filename of the imported CSV.</td>
+        </tr>
+        <tr>
+          <td class="col-name">account_name</td>
+          <td class="col-type">VARCHAR(160)</td>
+          <td></td>
+          <td>No</td>
+          <td>Identified tenant name inside the import.</td>
+        </tr>
+        <tr>
+          <td class="col-name">resource_count</td>
+          <td class="col-type">INT</td>
+          <td></td>
+          <td>No</td>
+          <td>Total resources imported in this run.</td>
+        </tr>
+        <tr>
+          <td class="col-name">total_spend</td>
+          <td class="col-type">DECIMAL(12,2)</td>
+          <td></td>
+          <td>No</td>
+          <td>Combined monthly cost before optimization.</td>
+        </tr>
+        <tr>
+          <td class="col-name">projected_savings</td>
+          <td class="col-type">DECIMAL(12,2)</td>
+          <td></td>
+          <td>No</td>
+          <td>Combined projected monthly savings.</td>
+        </tr>
+        <tr>
+          <td class="col-name">mode</td>
+          <td class="col-type">VARCHAR(20)</td>
+          <td></td>
+          <td>No</td>
+          <td>Either <code>mysql</code> (live database) or <code>sample</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. Indexing &amp; Query Optimization</h2>
+    <p>
+      To support instant analytics loading, indexes have been added to prevent table scans on fields commonly used for sorting and filtering:
+    </p>
+    <pre>-- Index on foreign key relationship
+CREATE INDEX idx_resources_account ON resources(account_id);
+
+-- Index on service category for spend mix breakdowns
+CREATE INDEX idx_resources_service ON resources(service);
+
+-- Index on recommendation priority for filtered recommendations
+CREATE INDEX idx_resources_priority ON resources(priority);</pre>
+
+    <h2>5. SQL Schema DDL (Data Definition Language)</h2>
+    <p>The complete, executable schema initialization script used for MySQL database setup:</p>
+    <pre>CREATE DATABASE IF NOT EXISTS cloud_cost_intelligence
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE cloud_cost_intelligence;
+
+CREATE TABLE IF NOT EXISTS accounts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  industry VARCHAR(120) NOT NULL,
+  monthly_budget DECIMAL(12,2) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS resources (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  account_id INT NOT NULL,
+  service VARCHAR(120) NOT NULL,
+  resource_name VARCHAR(160) NOT NULL,
+  environment VARCHAR(40) NOT NULL,
+  region VARCHAR(40) NOT NULL,
+  status VARCHAR(40) NOT NULL,
+  utilization_pct DECIMAL(5,2) NOT NULL,
+  monthly_cost DECIMAL(12,2) NOT NULL,
+  owner_team VARCHAR(120) NOT NULL,
+  last_used_days INT NOT NULL,
+  recommendation_type VARCHAR(40) NOT NULL,
+  recommendation_title VARCHAR(180) NOT NULL,
+  recommendation_detail TEXT NOT NULL,
+  estimated_monthly_savings DECIMAL(12,2) NOT NULL,
+  priority VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_resources_account FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
+);</pre>
+  </div>
+
+</body>
+</html>
