@@ -1,87 +1,169 @@
 # Cloud Cost Intelligence
 
-A full-stack prototype for the 22North Product Engineering Challenge. The app helps a SaaS company understand cloud spend concentration, identify waste, and prioritise actionable savings.
+A full-stack prototype for the **22North Product Engineering Challenge**. The app helps a SaaS company understand cloud spend concentration, identify waste, and prioritise actionable savings.
+
+---
 
 ## Team Details
 
-- Team Name: [Fill before submission]
-- Team Members: [Fill before submission]
-- College Name: [Fill before submission]
+| Field            | Value                 |
+| ---------------- | --------------------- |
+| **Team Name**    | [22North Team]        |
+| **Team Members** | [Jaymeen Devatka]     |
+| **College Name** | [Charusat University] |
 
-## Stack
+---
 
-- Frontend: React, Vite, JavaScript
-- Backend: Node.js, Express, JavaScript
-- Database: MySQL
-- Local runtime: MySQL server on your machine, sample-data fallback in the API
+## Technology Stack
 
-## Repository Structure
+| Layer        | Technologies                 |
+| ------------ | ---------------------------- |
+| **Frontend** | React, Vite, JavaScript, CSS |
+| **Backend**  | Node.js, Express, JavaScript |
+| **Database** | MySQL 8                      |
+| **Runtime**  | npm workspaces, concurrently |
+| **Optional** | Docker Compose for MySQL     |
+| **AI Tools** | GitHub Copilot               |
 
-- `client` - React dashboard
-- `server` - Express API and insight engine
-- `mysql/init` - MySQL schema and seed scripts
-- `docs` - architecture, API, assumptions, and demo material
+---
 
-## CSV Import Flow
+## Build & Run Instructions
 
-- Use the CSV import panel in the dashboard to upload a cost export or sample inventory file.
-- Download a starter template from the app if you want the expected column layout.
-- After upload, the prototype previews the parsed rows and then recalculates the dashboard once you click `Analyse CSV`.
-- Recent uploads are persisted to MySQL and shown in the import history panel when the database is available.
+### Prerequisites
 
-## Local Setup
+- Node.js 18+ and npm
+- MySQL 8 (optional — app falls back to bundled sample data)
 
-1. Start your local MySQL server and make sure it is reachable on port `3306`.
-2. Create the database and load the schema:
+### Steps
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/JaymeenDevatka/22North.git
+cd 22North
+```
+
+2. **Set up MySQL** (optional but recommended)
 
 ```bash
 mysql -u root -p < mysql/init/01_schema.sql
 ```
 
-3. Copy `.env.example` to `.env` and adjust values if needed.
-4. Install dependencies:
+3. **Configure environment**
+
+```bash
+copy .env.example .env
+```
+
+Edit `.env` if your MySQL credentials differ from the defaults.
+
+4. **Install dependencies**
 
 ```bash
 npm install
 ```
 
-5. Run the app:
+5. **Start the application**
 
 ```bash
 npm run dev
 ```
 
-6. Open the React app at `http://localhost:5173`.
+6. **Open the app**
 
-## Optional MySQL Notes
+- Frontend: http://localhost:5173
+- API health: http://localhost:4000/api/health
 
-- If you prefer Docker, `docker-compose.yml` is still available, but it is optional.
-- If MySQL is unavailable, the backend falls back to bundled sample data so the prototype still launches.
+### Alternative: Docker MySQL
 
-## API
+```bash
+docker compose up -d
+```
 
-- `GET /api/health`
-- `GET /api/dashboard`
-- `GET /api/resources`
-- `GET /api/meta`
-- `POST /api/import`
+Then run `npm run dev` as above.
 
-See [docs/api.md](docs/api.md) for details.
+---
 
-## Architecture
+## Repository Structure
 
-See [docs/architecture.md](docs/architecture.md) for the architecture diagram.
+```
+22North/
+├── client/                 # React dashboard (Vite)
+├── server/                 # Express API + insight engine
+├── mysql/init/             # MySQL schema and seed scripts
+├── docs/                   # Architecture, API, presentation, demo materials
+├── practice-cloud-costs.csv # Sample CSV for demo import
+├── SUBMISSION.md           # Full submission checklist
+└── README.md
+```
 
-## Demo
+---
 
-See [docs/demo-script.md](docs/demo-script.md) for the 5-minute walkthrough, [docs/presentation-outline.md](docs/presentation-outline.md) for the outline, [docs/presentation-deck.md](docs/presentation-deck.md) for slide-ready content, and [docs/speaker-script.md](docs/speaker-script.md) for presenter notes.
+## Features
+
+- **Spend dashboard** — monthly spend, budget coverage, projected savings
+- **Ranked recommendations** — sorted by savings impact with confidence and effort
+- **Service breakdown** — spend concentration by cloud service
+- **CSV import** — upload billing exports with preview and column mapping guide
+- **Import history** — persisted upload runs when MySQL is available
+- **Sample data fallback** — works without a database for reliable demos
+
+---
+
+## CSV Import Flow
+
+1. Use the CSV import panel in the dashboard to upload a cost export.
+2. Download the starter template from the app for the expected column layout.
+3. Review the parsed preview, then click **Analyse CSV**.
+4. The dashboard recalculates with imported data.
+5. Recent uploads appear in the import history panel when MySQL is connected.
+
+---
+
+## API Endpoints
+
+| Method | Endpoint         | Description                                 |
+| ------ | ---------------- | ------------------------------------------- |
+| GET    | `/api/health`    | Service status and data mode                |
+| GET    | `/api/dashboard` | Spend summary and recommendations           |
+| GET    | `/api/resources` | Raw resource inventory                      |
+| GET    | `/api/meta`      | Customer journey, architecture, assumptions |
+| GET    | `/api/imports`   | Recent import runs                          |
+| POST   | `/api/import`    | Analyse uploaded CSV data                   |
+
+See [docs/api.md](docs/api.md) for request/response details.
+
+---
+
+## Documentation
+
+| Document                       | Path                                                       |
+| ------------------------------ | ---------------------------------------------------------- |
+| Submission checklist           | [SUBMISSION.md](SUBMISSION.md)                             |
+| Solution document              | [docs/solution.md](docs/solution.md)                       |
+| Architecture                   | [docs/architecture.md](docs/architecture.md)               |
+| Presentation deck (Markdown)   | [docs/presentation-deck.md](docs/presentation-deck.md)     |
+| Presentation deck (HTML → PDF) | [docs/presentation-deck.html](docs/presentation-deck.html) |
+| Demo video guide               | [docs/demo-video-guide.md](docs/demo-video-guide.md)       |
+| Demo script                    | [docs/demo-script.md](docs/demo-script.md)                 |
+
+---
 
 ## Assumptions
 
-- The company already exports resource and billing data.
-- No live AWS integration is required.
+- The company already exports resource and billing data as CSV.
+- No live AWS integration is required for this challenge.
 - Savings estimates are directional and should be reviewed before execution.
+- A single account-level dashboard is sufficient for the MVP.
 
-## AI Tools Used
+---
 
-- GitHub Copilot
+## Source Code
+
+**GitHub:** https://github.com/JaymeenDevatka/22North
+
+---
+
+.## License
+
+Built for the 22North Product Engineering Challenge
