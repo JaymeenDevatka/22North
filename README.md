@@ -10,10 +10,10 @@ Turning cloud costs into business insights. Upload → Analyze → Visualize →
 
 | Field | Value |
 |-------|-------|
-| **Team Name** | [Your Team Name] |
-| **Team Members** | [Member 1, Member 2, Member 3] |
-| **College Name** | [Your College Name] |
-| **Contact** | [Email / Phone] |
+| **Team Name** | 22North |
+| **Team Members** | Jaymeen Devatka|
+| **College Name** | CHARUSAT UNIVERSITY |
+| **Contact** | jaymeendevatka@gmail.com = 7990583339|
 
 ---
 
